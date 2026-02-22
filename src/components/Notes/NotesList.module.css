@@ -1,0 +1,14 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.noNotes {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+  padding: 48px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
