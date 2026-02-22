@@ -6,13 +6,11 @@ import NoteCard from "./NoteCard";
 type NotesListProps = {
   notes: TNote[];
   onDelete?: (id: string) => void;
-}
+};
 
 export default function NotesList({ notes, onDelete }: NotesListProps) {
   if (notes.length === 0) {
-    return (
-      <p className={styles.noNotes}>Тут пока пусто</p>
-    )
+    return <p className={styles.noNotes}>Тут пока пусто</p>;
   }
 
   return (
@@ -21,5 +19,5 @@ export default function NotesList({ notes, onDelete }: NotesListProps) {
         <NoteCard key={note.id} note={note} onDelete={onDelete} />
       ))}
     </div>
-  )
+  );
 }
