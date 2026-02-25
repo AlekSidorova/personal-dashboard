@@ -1,0 +1,123 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 900px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #171717;
+}
+
+.input {
+  flex: 1;
+  padding: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.addButton {
+  min-width: 40px;
+  height: auto;
+  padding: 0 20px;
+  border: none;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.addButton:hover {
+  background: #2d2d44;
+  transform: scale(1.02);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.habitItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid #1a1a2e;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.habitItem:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.habitLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #171717;
+}
+
+.checkbox {
+  width: 22px;
+  height: 22px;
+  accent-color: #1a1a2e;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.habitTitle {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #171717;
+}
+
+.emptyState {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+  padding: 48px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}

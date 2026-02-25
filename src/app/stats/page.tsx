@@ -3,14 +3,9 @@ import { MoodTracker, HabitTracker } from "@/components/Stats";
 
 export default function StatsPage() {
   return (
-    <div>
-      <div>
-        <MoodTracker />
-      </div>
-
-      <div>
-        <HabitTracker />
-      </div>
+    <div className={styles.page}>
+      <MoodTracker />
+      <HabitTracker />
     </div>
-  )
+  );
 }
