@@ -8,3 +8,16 @@ export type TNote = {
   //pinned?: boolean; //закреплена ли заметка
   //color?: string; //цвет карточки
 }
+
+//типы для трекера настроений
+export type TMoodEntry = {
+  date: string;
+  mood: number; //от 1-5
+}
+
+//типы для трекера привычек
+export type THabit = {
+  id: string;
+  title: string;
+  completedDates: string[];
+}

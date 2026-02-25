@@ -1,3 +1,16 @@
+import styles from "./page.module.css";
+import { MoodTracker, HabitTracker } from "@/components/Stats";
+
 export default function StatsPage() {
-  return <h1>Трекеры</h1>;
+  return (
+    <div>
+      <div>
+        <MoodTracker />
+      </div>
+
+      <div>
+        <HabitTracker />
+      </div>
+    </div>
+  )
 }
