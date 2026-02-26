@@ -9,17 +9,21 @@ const today = new Date().toISOString().slice(0, 10);
 export default function HabitTracker() {
   const [habits, setHabits] = useState<THabit[]>([]);
   const [text, setText] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
 
   //загрузка
   useEffect(() => {
     const saved = localStorage.getItem("habits");
     if (saved) setHabits(JSON.parse(saved));
+    setIsLoaded(true);
   }, []);
 
   //сохранение
   useEffect(() => {
-    localStorage.setItem("habits", JSON.stringify(habits));
-  }, [habits]);
+    if (isLoaded) {
+      localStorage.setItem("habits", JSON.stringify(habits));
+    }
+  }, [habits, isLoaded]);
 
   //добавление трекеров
   const addHabit = () => {

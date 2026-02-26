@@ -18,23 +18,27 @@ const today = new Date().toISOString().slice(0, 10);
 export default function MoodTracker() {
   const [history, setHistory] = useState<TMoodEntry[]>([]);
   const [todayMood, setTodayMood] = useState<number | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   //загрузка
   useEffect(() => {
     const saved = localStorage.getItem("mood-history");
     if (saved) {
-      const parsed: TMoodEntry[] = JSON.parse(saved);
+      const parsed = JSON.parse(saved);
       setHistory(parsed);
 
       const todayEntry = parsed.find((e) => e.date === today);
       if (todayEntry) setTodayMood(todayEntry.mood);
     }
+    setIsLoaded(true);
   }, []);
 
   //сохранение
   useEffect(() => {
-    localStorage.setItem("mood-history", JSON.stringify(history));
-  }, [history]);
+    if (isLoaded) {
+      localStorage.setItem("mood-history", JSON.stringify(history));
+    }
+  }, [history, isLoaded]);
 
   const setMood = (value: number) => {
     setTodayMood(value);
