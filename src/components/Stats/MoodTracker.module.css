@@ -57,3 +57,33 @@
   font-size: 1rem;
   color: #171717;
 }
+
+.emptyHistory {
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.history {
+  margin-top: 12px;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.historyDate {
+  font-family: monospace;
+}
+
+.historyMood {
+  font-weight: 600;
+}

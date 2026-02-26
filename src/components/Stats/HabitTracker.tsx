@@ -50,6 +50,23 @@ export default function HabitTracker() {
     }))
   }
 
+  const getStreak = (dates: string[]) => {
+    let streak = 0
+    let current = new Date()
+
+    while (true) {
+      const d = current.toISOString().slice(0, 10)
+      if (dates.includes(d)) {
+        streak++
+        current.setDate(current.getDate() - 1)
+      } else {
+        break
+      }
+    }
+
+    return streak
+  }
+
   return (
     <section className={styles.section}>
       <div className={styles.header}>
@@ -59,7 +76,7 @@ export default function HabitTracker() {
       <div className={styles.inputRow}>
         <input
           className={styles.input}
-            value={text}
+          value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Новая привычка"
           onKeyDown={(e) => e.key === "Enter" && addHabit()}
@@ -75,6 +92,7 @@ export default function HabitTracker() {
         ) : (
           habits.map((habit) => {
             const doneToday = habit.completedDates.includes(today);
+            const streak = getStreak(habit.completedDates)
 
             return (
               <li key={habit.id} className={styles.habitItem}>
@@ -86,6 +104,7 @@ export default function HabitTracker() {
                     onChange={() => toggleToday(habit.id)}
                   />
                   <span className={styles.habitTitle}>{habit.title}</span>
+                  <span className={styles.streak}>{streak} дн</span>
                 </label>
               </li>
             );

@@ -111,6 +111,17 @@
   font-size: 1rem;
   line-height: 1.5;
   color: #171717;
+  flex: 1;
+}
+
+.streak {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  background: rgba(26, 26, 46, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .emptyState {
