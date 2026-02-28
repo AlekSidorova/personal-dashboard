@@ -80,7 +80,9 @@
   overflow-x: auto;
   border-radius: 12px;
   background: #ffffff;
-  border: 1px solid #ececec;
+  border-left: 4px solid #1a1a2e;
+  border-radius: 8px;
+  background: #f8f9fa;
 }
 
 .table {
@@ -119,7 +121,7 @@
 }
 
 .cell {
-  width: 29px;
+  width: 26px;
   height: 22px;
   border-radius: 6px;
   border: none;
@@ -144,4 +146,56 @@
 .future {
   background: #f4f4f4;
   cursor: default;
+}
+
+.deleteCol {
+  width: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.deleteButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  background: #ffe5e5;
+  color: #c0392b;
+  transform: scale(1.1);
+}
+
+.monthSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.switchButton {
+  padding: 4px 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background: #1a1a2e;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.switchButton:hover {
+  background: #2d2d44;
+  transform: scale(1.05);
 }

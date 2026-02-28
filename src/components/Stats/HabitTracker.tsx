@@ -10,14 +10,33 @@ export default function HabitTracker() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const today = new Date().toISOString().slice(0, 10);
-
   const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
 
-  //сколько дней в месяце
-  //"нулевой день следующего месяца" -> это последний день текущего месяца
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  //отображаемый месяц и год
+  const [displayMonth, setDisplayMonth] = useState(now.getMonth());
+  const [displayYear, setDisplayYear] = useState(now.getFullYear());
+
+  //переключение месяцев
+  const prevMonth = () => {
+    if (displayMonth === 0) {
+      setDisplayMonth(11);
+      setDisplayYear(displayYear - 1);
+    } else {
+      setDisplayMonth(displayMonth - 1);
+    }
+  };
+
+  const nextMonth = () => {
+    if (displayMonth === 11) {
+      setDisplayMonth(0);
+      setDisplayYear(displayYear + 1);
+    } else {
+      setDisplayMonth(displayMonth + 1);
+    }
+  };
+
+  //количество дней в отображаемом месяце
+  const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
 
   //генерируем массив чисел
   //теперь [1, 2, 3, ..., 31]
@@ -25,11 +44,17 @@ export default function HabitTracker() {
 
   //превращаем число дня в строку
   const getDateString = (day: number) => {
-    return new Date(year, month, day).toISOString().slice(0, 10);
+    return new Date(displayYear, displayMonth, day).toISOString().slice(0, 10);
   };
 
   //заголовок месяца
-  const monthName = now.toLocaleDateString("ru-RU", { month: "long" });
+  const monthName = new Date(displayYear, displayMonth).toLocaleDateString(
+    "ru-RU",
+    { month: "long" },
+  );
+
+  //делаем первую букву месяца заглавной
+  const monthNameCapitalized = monthName.charAt(0).toUpperCase()+monthName.slice(1);
 
   //загрузка
   useEffect(() => {
@@ -45,7 +70,7 @@ export default function HabitTracker() {
     }
   }, [habits, isLoaded]);
 
-  //добавление трекеров
+  //добавление
   const addHabit = () => {
     if (!text.trim()) return;
 
@@ -59,15 +84,13 @@ export default function HabitTracker() {
     setText("");
   };
 
+  //отметка дня
   const toggleDate = (habitId: string, date: string) => {
     if (date > today) return;
-
     setHabits((prev) =>
       prev.map((habit) => {
         if (habit.id !== habitId) return habit;
-
         const isCompleted = habit.completedDates.includes(date);
-
         return {
           ...habit,
           completedDates: isCompleted
@@ -78,21 +101,19 @@ export default function HabitTracker() {
     );
   };
 
-  const getStreak = (dates: string[]) => {
-    let streak = 0;
-    let current = new Date();
+  //подсчет выполненных дней в выбранном месяце
+  const getStreakInMonth = (dates: string[]) => {
+    return dates.filter((d) => {
+      const date = new Date(d);
+      return (
+        date.getFullYear() === displayYear && date.getMonth() === displayMonth
+      );
+    }).length;
+  };
 
-    while (true) {
-      const d = current.toISOString().slice(0, 10);
-      if (dates.includes(d)) {
-        streak++;
-        current.setDate(current.getDate() - 1);
-      } else {
-        break;
-      }
-    }
-
-    return streak;
+  //удаление ненужных привычек
+  const deleteHabit = (habitId: string) => {
+    setHabits((prev) => prev.filter((habit) => habit.id !== habitId));
   };
 
   return (
@@ -101,6 +122,7 @@ export default function HabitTracker() {
         <h3 className={styles.title}>Привычки</h3>
       </div>
 
+      {/* Добавление привычки */}
       <div className={styles.inputRow}>
         <input
           className={styles.input}
@@ -114,10 +136,19 @@ export default function HabitTracker() {
         </button>
       </div>
 
-      <h4 className={styles.monthTitle}>
-        {monthName} {year}
-      </h4>
-      
+      {/* Переключение месяцев */}
+      <div className={styles.monthSwitcher}>
+        <button className={styles.switchButton} onClick={prevMonth}>
+          ‹
+        </button>
+        <h4 className={styles.monthTitle}>
+          {monthNameCapitalized} {displayYear}
+        </h4>
+        <button className={styles.switchButton} onClick={nextMonth}>
+          ›
+        </button>
+      </div>
+
       {habits.length === 0 ? (
         <div className={styles.emptyState}>
           Пока нет привычек. Добавь первую!
@@ -128,14 +159,13 @@ export default function HabitTracker() {
             {/* Header */}
             <div className={styles.row}>
               <div className={styles.habitCol}></div>
-
               {days.map((day) => (
                 <div key={day} className={styles.dayCol}>
                   {day}
                 </div>
               ))}
-
               <div className={styles.streakCol}>🔥</div>
+              <div className={styles.deleteCol}></div>
             </div>
 
             {/* Rows */}
@@ -152,19 +182,24 @@ export default function HabitTracker() {
                     <button
                       key={day}
                       disabled={isFuture}
-                      className={`
-                  ${styles.cell}
-                  ${isCompleted ? styles.done : ""}
-                  ${isFuture ? styles.future : ""}
-                `}
+                      className={`${styles.cell} ${isCompleted ? styles.done : ""} ${isFuture ? styles.future : ""}`}
                       onClick={() => toggleDate(habit.id, dateString)}
                     />
                   );
                 })}
 
                 <div className={styles.streakCol}>
-                  {getStreak(habit.completedDates)}
+                  {getStreakInMonth(habit.completedDates)}
                 </div>
+
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => {
+                    if (confirm("Удалить привычку?")) deleteHabit(habit.id);
+                  }}
+                >
+                  ✕
+                </button>
               </div>
             ))}
           </div>
