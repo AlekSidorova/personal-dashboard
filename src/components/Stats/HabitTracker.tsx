@@ -4,12 +4,32 @@ import styles from "./HabitTracker.module.css";
 import { useState, useEffect } from "react";
 import type { THabit } from "@/types";
 
-const today = new Date().toISOString().slice(0, 10);
-
 export default function HabitTracker() {
   const [habits, setHabits] = useState<THabit[]>([]);
   const [text, setText] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+
+  //сколько дней в месяце
+  //"нулевой день следующего месяца" -> это последний день текущего месяца
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  //генерируем массив чисел
+  //теперь [1, 2, 3, ..., 31]
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+  //превращаем число дня в строку
+  const getDateString = (day: number) => {
+    return new Date(year, month, day).toISOString().slice(0, 10);
+  };
+
+  //заголовок месяца
+  const monthName = now.toLocaleDateString("ru-RU", { month: "long" });
 
   //загрузка
   useEffect(() => {
@@ -41,13 +61,16 @@ export default function HabitTracker() {
 
   const toggleDate = (habitId: string, date: string) => {
     if (date > today) return;
-    setHabits(
-      habits.map((habit) => {
+
+    setHabits((prev) =>
+      prev.map((habit) => {
         if (habit.id !== habitId) return habit;
-        const isDone = habit.completedDates.includes(date);
+
+        const isCompleted = habit.completedDates.includes(date);
+
         return {
           ...habit,
-          completedDates: isDone
+          completedDates: isCompleted
             ? habit.completedDates.filter((d) => d !== date)
             : [...habit.completedDates, date],
         };
@@ -72,21 +95,6 @@ export default function HabitTracker() {
     return streak;
   };
 
-  //календарный метод как в гитхаб
-  const getLastDays = (count = 30) => {
-    const days = [];
-
-    for (let i = count - 1; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      days.push(d.toISOString().slice(0, 10));
-    }
-
-    return days;
-  };
-
-  const days = getLastDays(35);
-
   return (
     <section className={styles.section}>
       <div className={styles.header}>
@@ -106,48 +114,62 @@ export default function HabitTracker() {
         </button>
       </div>
 
-      <ul className={styles.list}>
-        {habits.length === 0 ? (
-          <li className={styles.emptyState}>
-            Пока нет привычек. Добавь первую!
-          </li>
-        ) : (
-          habits.map((habit) => {
-            const doneToday = habit.completedDates.includes(today);
-            const streak = getStreak(habit.completedDates);
+      <h4 className={styles.monthTitle}>
+        {monthName} {year}
+      </h4>
+      
+      {habits.length === 0 ? (
+        <div className={styles.emptyState}>
+          Пока нет привычек. Добавь первую!
+        </div>
+      ) : (
+        <div className={styles.tableWrapper}>
+          <div className={styles.table}>
+            {/* Header */}
+            <div className={styles.row}>
+              <div className={styles.habitCol}></div>
 
-            return (
-              <li key={habit.id} className={styles.habitItem}>
-                <label className={styles.habitLabel}>
-                  <input
-                    type="checkbox"
-                    className={styles.checkbox}
-                    checked={doneToday}
-                    onChange={() => toggleDate(habit.id, today)}
-                  />
-                  <span className={styles.habitTitle}>{habit.title}</span>
-                  <span className={styles.streak}>{streak} дн</span>
-                </label>
-                <div className={styles.calendarGrid}>
-                  {days.map((day) => {
-                    const isCompleted = habit.completedDates.includes(day);
-                    const isFuture = day > today;
-                    return (
-                      <button
-                        key={day}
-                        type="button"
-                        className={`${styles.calendarCell} ${isCompleted ? styles.calendarCellDone : ""} ${isFuture ? styles.calendarCellFuture : ""}`}
-                        onClick={() => !isFuture && toggleDate(habit.id, day)}
-                        title={day}
-                      />
-                    );
-                  })}
+              {days.map((day) => (
+                <div key={day} className={styles.dayCol}>
+                  {day}
                 </div>
-              </li>
-            );
-          })
-        )}
-      </ul>
+              ))}
+
+              <div className={styles.streakCol}>🔥</div>
+            </div>
+
+            {/* Rows */}
+            {habits.map((habit) => (
+              <div key={habit.id} className={styles.row}>
+                <div className={styles.habitCol}>{habit.title}</div>
+
+                {days.map((day) => {
+                  const dateString = getDateString(day);
+                  const isCompleted = habit.completedDates.includes(dateString);
+                  const isFuture = dateString > today;
+
+                  return (
+                    <button
+                      key={day}
+                      disabled={isFuture}
+                      className={`
+                  ${styles.cell}
+                  ${isCompleted ? styles.done : ""}
+                  ${isFuture ? styles.future : ""}
+                `}
+                      onClick={() => toggleDate(habit.id, dateString)}
+                    />
+                  );
+                })}
+
+                <div className={styles.streakCol}>
+                  {getStreak(habit.completedDates)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

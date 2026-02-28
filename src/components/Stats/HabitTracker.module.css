@@ -24,6 +24,10 @@
   color: #171717;
 }
 
+.monthTitle {
+  /* стили для заголовка месяца */
+}
+
 .input {
   flex: 1;
   padding: 16px;
@@ -63,68 +67,6 @@
   transform: scale(1.02);
 }
 
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.habitItem {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 16px;
-  border-left: 4px solid #1a1a2e;
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-
-.habitItem:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-}
-
-.habitLabel {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  cursor: pointer;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #171717;
-}
-
-.checkbox {
-  width: 22px;
-  height: 22px;
-  accent-color: #1a1a2e;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.habitTitle {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #171717;
-  flex: 1;
-}
-
-.streak {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #1a1a2e;
-  background: rgba(26, 26, 46, 0.1);
-  padding: 4px 8px;
-  border-radius: 6px;
-  flex-shrink: 0;
-}
-
 .emptyState {
   text-align: center;
   color: #888;
@@ -134,39 +76,72 @@
   border-radius: 8px;
 }
 
-.calendarGrid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  margin-top: 12px;
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #ececec;
 }
 
-.calendarCell {
-  width: 14px;
-  height: 14px;
-  min-width: 14px;
-  min-height: 14px;
-  padding: 0;
+.table {
+  min-width: 800px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.habitCol {
+  min-width: 160px;
+  font-weight: 500;
+  color: #171717;
+}
+
+.dayCol {
+  width: 28px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.streakCol {
+  width: 50px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.cell {
+  width: 29px;
+  height: 22px;
+  border-radius: 6px;
   border: none;
-  border-radius: 3px;
-  background: #e0e0e0;
+  background: #e6e6e6;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
-.calendarCell:hover:not(.calendarCellFuture) {
+.cell:hover:not(.future) {
   background: #d0d0d0;
+  transform: scale(1.05);
 }
 
-.calendarCellDone {
+.done {
   background: #1a1a2e;
 }
 
-.calendarCellDone:hover {
+.done:hover {
   background: #2d2d44;
 }
 
-.calendarCellFuture {
-  background: #f0f0f0;
+.future {
+  background: #f4f4f4;
   cursor: default;
 }
