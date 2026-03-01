@@ -3,13 +3,14 @@
 import styles from "./HabitTracker.module.css";
 import { useState, useEffect } from "react";
 import type { THabit } from "@/types";
+import { getToday, buildDateString } from "@/utils/date";
 
 export default function HabitTracker() {
   const [habits, setHabits] = useState<THabit[]>([]);
   const [text, setText] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getToday();
   const now = new Date();
 
   //отображаемый месяц и год
@@ -44,7 +45,7 @@ export default function HabitTracker() {
 
   //превращаем число дня в строку
   const getDateString = (day: number) => {
-    return new Date(displayYear, displayMonth, day).toISOString().slice(0, 10);
+    return buildDateString(displayYear, displayMonth, day)
   };
 
   //заголовок месяца
