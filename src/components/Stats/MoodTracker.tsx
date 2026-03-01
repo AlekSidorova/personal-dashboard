@@ -12,8 +12,9 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { getToday } from "@/utils/date";
 
-const today = new Date().toISOString().slice(0, 10);
+const today = getToday();
 
 export default function MoodTracker() {
   const [history, setHistory] = useState<TMoodEntry[]>([]);
