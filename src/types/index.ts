@@ -21,3 +21,15 @@ export type THabit = {
   title: string;
   completedDates: string[];
 }
+
+//типы для тудушки в планере
+export type TPlan = {
+  id: string;
+  text: string;
+  completed: boolean;
+}
+
+export type TDayPlans = {
+  date: string; //YYYY-MM-DD
+  plans: TPlan[];
+}
