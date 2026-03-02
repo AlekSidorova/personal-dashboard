@@ -1,29 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { TPlan } from "@/types";
 
 type DayCardProps = {
   date: string;
-  plans: TPlan[];
-  onAdd: (date: string, text: string) => void;
-  onToggle: (date: string, planId: string) => void;
 };
 
-export default function DayCard({
-  date,
-  plans,
-  onAdd,
-  onToggle,
-}: DayCardProps) {
+export default function DayCard({ date }: DayCardProps) {
+  const [plans, setPlans] = useState<TPlan[]>([]);
   const [text, setText] = useState("");
+
+  //загрузка планов
+  useEffect(() => {
+    const saved = localStorage.getItem(`plans-${date}`);
+    if (saved) {
+      try {
+        setPlans(JSON.parse(saved));
+      } catch {
+        setPlans([]);
+      }
+    }
+  }, [date]);
+
+  //сохранение
+  useEffect(() => {
+    localStorage.setItem(`plans-${date}`, JSON.stringify(plans));
+  }, [plans, date]);
 
   const completedCount = plans.filter((p) => p.completed).length;
 
   const handleAdd = () => {
     if (!text.trim()) return;
-    onAdd(date, text);
+
+    const newPlan: TPlan = {
+      id: crypto.randomUUID(),
+      text,
+      completed: false,
+    };
+
+    setPlans([...plans, newPlan]);
     setText("");
+  };
+
+  const handleToggle = (planId: string) => {
+    setPlans((prev) =>
+      prev.map((p) =>
+        p.id === planId ? { ...p, completed: !p.completed } : p,
+      ),
+    );
   };
 
   return (
@@ -42,7 +67,7 @@ export default function DayCard({
               <input
                 type="checkbox"
                 checked={plan.completed}
-                onChange={() => onToggle(date, plan.id)}
+                onChange={() => handleToggle(plan.id)}
               />
               {plan.text}
             </label>
