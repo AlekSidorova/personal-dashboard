@@ -60,6 +60,8 @@ export default function DayCard({ date }: DayCardProps) {
 
   return (
     <div className={styles.card}>
+      {/* ТУТ ДОЛЖНО БЫТЬ ДЕНЬ НЕДЕЛИ */}
+
       <div>
         {/* Список задач */}
         <ul className={styles.plans}>
@@ -69,7 +71,8 @@ export default function DayCard({ date }: DayCardProps) {
                 <input
                   type="checkbox"
                   checked={plan.completed}
-                  onChange={() => handleToggle(plan.id)}
+                  onChange={() => handleToggle(plan.id)
+                  }
                 />
                 {plan.text}
               </label>
@@ -80,21 +83,26 @@ export default function DayCard({ date }: DayCardProps) {
 
       <div>
         {/* Добавление */}
-        <div>
+        <div className={styles.newPlan}>
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Новая задача"
+            className={styles.placeholder}
           />
-          <button onClick={handleAdd}>+</button>
+          <button onClick={handleAdd} className={styles.addButton}>
+            +
+          </button>
         </div>
 
         <div className={styles.footer}>
-          <p>{date}</p>
+          <p className={styles.date}>{date}</p>
 
-          <p>
-            ☑︎ {completedCount}/{plans.length}
-          </p>
+          <div className={styles.completed}>
+            <p>
+              ☑︎ {completedCount}/{plans.length}
+            </p>
+          </div>
         </div>
       </div>
     </div>

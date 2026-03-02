@@ -4,9 +4,12 @@
   border-radius: 8px;
   padding: 16px;
   border-left: 4px solid #1a1a2e;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+  min-width: 220px;
   max-width: 250px;
-  height: 250px;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,14 +20,73 @@
   transform: translateY(-2px);
 }
 
+/* Заголовок дня недели
+.date {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+} */
+
 .plans {
- display: flex;
- flex-direction: column;
- gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .list {
   list-style-type: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #171717;
+  
+}
+
+.list label {
+  display: flex;
+  align-items: center;
+  color: #171717;
+  gap: 5px;
+  background: #f4f4f4;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.newPlan {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.placeholder {
+  padding: 2px;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.placeholder::placeholder {
+  color: #999;
+}
+
+.addButton {
+  width: 25px;
+  height: 25px;
+  border: none;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addButton:hover {
+  background: #2d2d44;
+  transform: scale(1.05);
 }
 
 .footer {
@@ -32,4 +94,22 @@
   font-size: 0.75rem;
   color: #888;
   justify-content: space-between;
+  align-items: center;
+}
+
+.date {
+  font-size: 0.87rem;
+}
+
+.completed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  color: #aba6a6;
+  border-radius: 6px;
+}
+
+.completed p {
+  padding: 2px 5px;
 }
