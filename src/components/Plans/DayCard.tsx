@@ -10,6 +10,8 @@ type DayCardProps = {
 export default function DayCard({ date }: DayCardProps) {
   const [plans, setPlans] = useState<TPlan[]>([]);
   const [text, setText] = useState("");
+  //чтобы не переписывались данные
+  const [isLoaded, setIsLoaded] = useState(false);
 
   //загрузка планов
   useEffect(() => {
@@ -21,12 +23,16 @@ export default function DayCard({ date }: DayCardProps) {
         setPlans([]);
       }
     }
+    setIsLoaded(true); //флаг вкл после загрузки
   }, [date]);
 
   //сохранение
   useEffect(() => {
-    localStorage.setItem(`plans-${date}`, JSON.stringify(plans));
-  }, [plans, date]);
+    if (isLoaded) { //сохраняем только после загрузки
+      localStorage.setItem(`plans-${date}`, JSON.stringify(plans));
+    }
+    
+  }, [plans, date, isLoaded]);
 
   const completedCount = plans.filter((p) => p.completed).length;
 
