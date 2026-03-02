@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import type { TPlan } from "@/types";
+import styles from "./DayCard.module.css";
 
 type DayCardProps = {
   date: string;
@@ -28,10 +29,10 @@ export default function DayCard({ date }: DayCardProps) {
 
   //сохранение
   useEffect(() => {
-    if (isLoaded) { //сохраняем только после загрузки
+    if (isLoaded) {
+      //сохраняем только после загрузки
       localStorage.setItem(`plans-${date}`, JSON.stringify(plans));
     }
-    
   }, [plans, date, isLoaded]);
 
   const completedCount = plans.filter((p) => p.completed).length;
@@ -58,37 +59,43 @@ export default function DayCard({ date }: DayCardProps) {
   };
 
   return (
-    <div>
-      <h3>{date}</h3>
-
-      <p>
-        Выполнено {completedCount}/{plans.length}
-      </p>
-
-      {/* Список задач */}
-      <ul>
-        {plans.map((plan) => (
-          <li key={plan.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={plan.completed}
-                onChange={() => handleToggle(plan.id)}
-              />
-              {plan.text}
-            </label>
-          </li>
-        ))}
-      </ul>
-
-      {/* Добавление */}
+    <div className={styles.card}>
       <div>
-        <input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Новая задача"
-        />
-        <button onClick={handleAdd}>+</button>
+        {/* Список задач */}
+        <ul className={styles.plans}>
+          {plans.map((plan) => (
+            <li key={plan.id} className={styles.list}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={plan.completed}
+                  onChange={() => handleToggle(plan.id)}
+                />
+                {plan.text}
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        {/* Добавление */}
+        <div>
+          <input
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Новая задача"
+          />
+          <button onClick={handleAdd}>+</button>
+        </div>
+
+        <div className={styles.footer}>
+          <p>{date}</p>
+
+          <p>
+            ☑︎ {completedCount}/{plans.length}
+          </p>
+        </div>
       </div>
     </div>
   );
