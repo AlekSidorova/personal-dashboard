@@ -36,6 +36,8 @@ export default function DayCard({ date }: DayCardProps) {
   }, [plans, date, isLoaded]);
 
   const completedCount = plans.filter((p) => p.completed).length;
+  //для подсветки счетчика
+  const isAllCompleted = plans.length > 0 && completedCount === plans.length;
 
   const handleAdd = () => {
     if (!text.trim()) return;
@@ -101,7 +103,9 @@ export default function DayCard({ date }: DayCardProps) {
         <div className={styles.footer}>
           <p className={styles.date}>{date}</p>
 
-          <div className={styles.completed}>
+          <div
+            className={`${styles.completed} ${isAllCompleted ? styles.completedActive : styles.completedInactive}`}
+          >
             <p>
               ☑︎ {completedCount}/{plans.length}
             </p>
