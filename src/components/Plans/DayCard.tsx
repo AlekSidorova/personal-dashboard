@@ -68,12 +68,15 @@ export default function DayCard({ date }: DayCardProps) {
           {plans.map((plan) => (
             <li key={plan.id} className={styles.list}>
               <label>
-                <input
-                  type="checkbox"
-                  checked={plan.completed}
-                  onChange={() => handleToggle(plan.id)
-                  }
-                />
+                <div
+                  className={`${styles.customCheckbox} ${
+                    plan.completed ? styles.checked : ""
+                  }`}
+                  onClick={() => handleToggle(plan.id)}
+                  role="checkbox"
+                  aria-checked={plan.completed}
+                  tabIndex={0}
+                ></div>
                 {plan.text}
               </label>
             </li>
