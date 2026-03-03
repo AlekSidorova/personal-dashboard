@@ -28,8 +28,3 @@ export type TPlan = {
   text: string;
   completed: boolean;
 }
-
-export type TDayPlans = {
-  date: string; //YYYY-MM-DD
-  plans: TPlan[];
-}

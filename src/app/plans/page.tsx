@@ -1,17 +1,13 @@
-//вывод планов одного дня
 "use client";
 
-import { DayCard } from "@/components/Plans";
-import { getToday } from "@/utils/date";
+import { WeeklyBoard } from "@/components/Plans";
+import styles from "./page.module.css";
 
 export default function PlansPage() {
-  const today = getToday();
-
   return (
     <div>
-      <h1>Планы на день</h1>
-
-      <DayCard date={today} />
+      <h1 className={styles.title}>Планы на день</h1>
+      <WeeklyBoard />
     </div>
   );
 }

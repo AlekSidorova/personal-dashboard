@@ -19,7 +19,7 @@
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: #171717;
 }
@@ -153,7 +153,6 @@
   display: flex;
   justify-content: center;
 }
-
 
 .deleteButton {
   width: 32px;

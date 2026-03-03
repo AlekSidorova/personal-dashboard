@@ -1,0 +1,34 @@
+.board {
+
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.grid {
+ display: grid;
+  grid-template-columns: repeat(3, 250px);
+  gap: 30px;
+}
+
+.switchButton {
+  padding: 4px 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background: #1a1a2e;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  width: 31px;
+  height: 31px;
+}
+
+.switchButton:hover {
+  background: #2d2d44;
+  transform: scale(1.05);
+}
