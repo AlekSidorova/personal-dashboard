@@ -3,12 +3,20 @@
 import { useState, useEffect } from "react";
 import type { TPlan } from "@/types";
 import styles from "./DayCard.module.css";
+import { daysOfWeek } from "./dataWeek";
 
 type DayCardProps = {
   date: string;
 };
 
 export default function DayCard({ date }: DayCardProps) {
+  //для добавления дня недели
+  const dateObject = new Date(date);
+  //получаем номер дня недели
+  const dayOfWeekIndex = dateObject.getDay();
+  //получаем название дня недели
+  const dayOfWeekName = daysOfWeek[dayOfWeekIndex];
+
   const [plans, setPlans] = useState<TPlan[]>([]);
   const [text, setText] = useState("");
   //чтобы не переписывались данные
@@ -62,9 +70,10 @@ export default function DayCard({ date }: DayCardProps) {
 
   return (
     <div className={styles.card}>
-      {/* ТУТ ДОЛЖНО БЫТЬ ДЕНЬ НЕДЕЛИ */}
-
       <div>
+        {/* День недели */}
+        <p className={styles.weekday}>{dayOfWeekName}</p>
+
         {/* Список задач */}
         <ul className={styles.plans}>
           {plans.map((plan) => (

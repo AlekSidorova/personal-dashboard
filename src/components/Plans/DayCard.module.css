@@ -9,7 +9,7 @@
     transform 0.2s;
   min-width: 220px;
   max-width: 250px;
-  min-height: 250px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,13 +20,12 @@
   transform: translateY(-2px);
 }
 
-/* Заголовок дня недели
-.date {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #1a1a2e;
-  margin-bottom: 12px;
-} */
+.weekday {
+  font-size: .87rem;
+  font-weight: 600;
+  color: #171717;
+  margin-bottom: 10px;
+} 
 
 .plans {
   display: flex;
