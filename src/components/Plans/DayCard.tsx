@@ -7,9 +7,10 @@ import { daysOfWeek } from "./dataWeek";
 
 type DayCardProps = {
   date: string;
+  searchQuery: string;
 };
 
-export default function DayCard({ date }: DayCardProps) {
+export default function DayCard({ date, searchQuery }: DayCardProps) {
   //для добавления дня недели
   const dateObject = new Date(date);
   //получаем номер дня недели
@@ -21,6 +22,11 @@ export default function DayCard({ date }: DayCardProps) {
   const [text, setText] = useState("");
   //чтобы не переписывались данные
   const [isLoaded, setIsLoaded] = useState(false);
+
+  //фильтр задач
+  const filteredPlans = plans.filter((plan) =>
+    plan.text.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   //загрузка планов
   useEffect(() => {
@@ -76,7 +82,7 @@ export default function DayCard({ date }: DayCardProps) {
 
         {/* Список задач */}
         <ul className={styles.plans}>
-          {plans.map((plan) => (
+          {filteredPlans.map((plan) => (
             <li key={plan.id} className={styles.list}>
               <label>
                 <div

@@ -1,17 +1,26 @@
 .board {
-
+  max-width: 800px;
 }
 
 .header {
   display: flex;
-  align-items: flex-start;
-  gap: 20px;
+  justify-content: space-between; /* стрелки по краям, дата по центру */
+  align-items: center; /* вертикальное выравнивание по центру */
+  padding-bottom: 16px;
+  gap: 16px;
+}
+
+.weekRange {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
 }
 
 .grid {
- display: grid;
-  grid-template-columns: repeat(3, 250px);
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* адаптивная ширина */
+  gap: 20px; /* уменьшенный отступ */
+  margin-top: 20px; /* отступ от поиска */
 }
 
 .switchButton {
@@ -31,4 +40,22 @@
 .switchButton:hover {
   background: #2d2d44;
   transform: scale(1.05);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  font-family: inherit;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
