@@ -74,6 +74,11 @@ export default function DayCard({ date, searchQuery }: DayCardProps) {
     );
   };
 
+  //удалить задачу
+  const handleDelete = (planId: string) => {
+    setPlans((prev) => prev.filter((plan) => plan.id !== planId));
+  };
+
   return (
     <div className={styles.card}>
       <div>
@@ -84,7 +89,7 @@ export default function DayCard({ date, searchQuery }: DayCardProps) {
         <ul className={styles.plans}>
           {filteredPlans.map((plan) => (
             <li key={plan.id} className={styles.list}>
-              <label>
+              <div className={styles.taskContainer}>
                 <div
                   className={`${styles.customCheckbox} ${
                     plan.completed ? styles.checked : ""
@@ -93,9 +98,29 @@ export default function DayCard({ date, searchQuery }: DayCardProps) {
                   role="checkbox"
                   aria-checked={plan.completed}
                   tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleToggle(plan.id);
+                    }
+                  }}
                 ></div>
-                {plan.text}
-              </label>
+
+                <span className={styles.taskText}>{plan.text}</span>
+
+                <button
+                  type="button"
+                  className={styles.deleteButton}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDelete(plan.id);
+                  }}
+                  aria-label={`Удалить задачу "${plan.text}"`}
+                >
+                  ×
+                </button>
+              </div>
             </li>
           ))}
         </ul>

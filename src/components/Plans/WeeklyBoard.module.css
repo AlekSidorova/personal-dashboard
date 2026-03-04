@@ -4,8 +4,8 @@
 
 .header {
   display: flex;
-  justify-content: space-between; /* стрелки по краям, дата по центру */
-  align-items: center; /* вертикальное выравнивание по центру */
+  justify-content: space-between; 
+  align-items: center; 
   padding-bottom: 16px;
   gap: 16px;
 }
@@ -18,9 +18,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* адаптивная ширина */
-  gap: 20px; /* уменьшенный отступ */
-  margin-top: 20px; /* отступ от поиска */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; 
+  margin-top: 20px; 
 }
 
 .switchButton {
@@ -56,6 +56,9 @@
 
 .searchInput:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: #1a1a2e;
+}
+
+.searchInput::placeholder {
+  color: #999;
 }
