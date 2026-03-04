@@ -131,6 +131,11 @@ export default function DayCard({ date, searchQuery }: DayCardProps) {
         <div className={styles.newPlan}>
           <input
             value={text}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleAdd();
+              }
+            }}
             onChange={(e) => setText(e.target.value)}
             placeholder="Новая задача"
             className={styles.placeholder}
